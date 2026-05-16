@@ -15,9 +15,10 @@ interface ChartPoint {
 }
 
 interface ServerMessage {
-  type: 'backfill' | 'trade' | 'candle'
+  type: 'backfill' | 'trade' | 'candle' | 'price'
   trades?: Trade[]
   trade?: Trade
+  price?: number
 }
 
 const MAX_CHART_POINTS = 300
@@ -26,6 +27,7 @@ const MAX_TRADES = 100
 export default function App() {
   const [trades, setTrades] = useState<Trade[]>([])
   const [chartData, setChartData] = useState<ChartPoint[]>([])
+  const [currentPrice, setCurrentPrice] = useState<number | null>(null)
   const [status, setStatus] = useState<'connecting' | 'connected' | 'disconnected'>('connecting')
   const wsRef = useRef<WebSocket | null>(null)
 
@@ -57,6 +59,10 @@ export default function App() {
         setTrades((prev) => [msg.trade!, ...prev].slice(0, MAX_TRADES))
         setChartData((prev) => [...prev, toChartPoint(msg.trade!)].slice(-MAX_CHART_POINTS))
       }
+
+      if (msg.type === 'price' && msg.price !== undefined) {
+        setCurrentPrice(msg.price)
+      }
     })
 
     return () => {
@@ -68,20 +74,20 @@ export default function App() {
     }
   }, [])
 
-  const latestPrice = trades[0]?.price
+  const displayPrice = currentPrice ?? trades[0]?.price
 
   return (
     <div style={styles.page}>
       <header style={styles.header}>
-        <h1 style={styles.title}>BTC / USDT</h1>
+        <h1 style={styles.title}>BTC / USD</h1>
         <span style={{ ...styles.badge, background: status === 'connected' ? '#16a34a' : '#dc2626' }}>
           {status}
         </span>
       </header>
 
-      {latestPrice !== undefined && (
+      {displayPrice !== undefined && (
         <div style={styles.price}>
-          ${latestPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+          ${displayPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}
         </div>
       )}
 
