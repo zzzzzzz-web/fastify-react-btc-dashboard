@@ -1,0 +1,7 @@
+{
+  "name": "fast-ws",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel -r dev"
+  }
+}
