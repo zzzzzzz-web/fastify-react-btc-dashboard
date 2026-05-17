@@ -1,6 +1,7 @@
 import Fastify from 'fastify'
 import fastifyWebsocket from '@fastify/websocket'
 import WebSocket from 'ws'
+import closeWithGrace from 'close-with-grace'
 import { createCoinbaseFeed } from './coinbase.js'
 import {
   connectRedis,
@@ -94,12 +95,10 @@ fastify.get('/stream', { websocket: true }, (socket) => {
 
 await fastify.listen({ port: 3000, host: '0.0.0.0' })
 
-async function shutdown() {
+closeWithGrace({ delay: 10_000 }, async ({ err }) => {
+  if (err) fastify.log.error(err)
+  for (const client of clients) client.close()
   await fastify.close()
   await redis.quit()
   await sql.end()
-  process.exit(0)
-}
-
-process.on('SIGTERM', shutdown)
-process.on('SIGINT', shutdown)
+})
