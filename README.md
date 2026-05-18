@@ -1,5 +1,7 @@
 # fastify-react-btc-dashboard
 
+[![CI](https://github.com/zzzzzzz-web/fastify-react-btc-dashboard/actions/workflows/ci.yml/badge.svg)](https://github.com/zzzzzzz-web/fastify-react-btc-dashboard/actions/workflows/ci.yml)
+
 A real-time BTC/USD price and trade dashboard built with Fastify, WebSockets, React, Redis, and TimescaleDB.
 
 ![Dashboard screenshot](screenshot.png)
@@ -31,6 +33,29 @@ docker compose up -d        # redis + postgres
 pnpm install
 pnpm dev                    # server on :3000, client on :5173
 ```
+
+## Commands
+
+```bash
+pnpm test          # run all tests (vitest)
+pnpm lint          # eslint
+pnpm format        # prettier
+
+# typecheck
+pnpm --filter @btc-dashboard/server exec tsc --noEmit
+pnpm --filter @btc-dashboard/client exec tsc --noEmit
+```
+
+## CI
+
+Every push to `main` runs typecheck → lint → tests via GitHub Actions. If all pass, Docker images are built and pushed to GitHub Container Registry:
+
+```
+ghcr.io/zzzzzzz-web/fastify-react-btc-dashboard/server:latest
+ghcr.io/zzzzzzz-web/fastify-react-btc-dashboard/nginx:latest
+```
+
+Images are also tagged with the commit SHA for rollback. To skip CI for a commit (e.g. docs changes), add `[skip ci]` to the commit message.
 
 ## Production
 
