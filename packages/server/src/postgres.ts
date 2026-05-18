@@ -34,7 +34,7 @@ interface CandleRow {
   volume: number
 }
 
-const rangeConfig: Record<CandleRange, { view: string; interval: string }> = {
+export const rangeConfig: Record<CandleRange, { view: string; interval: string }> = {
   day: { view: 'candles_1m', interval: '1 day' },
   week: { view: 'candles_1h', interval: '7 days' },
   month: { view: 'candles_1d', interval: '1 month' },
