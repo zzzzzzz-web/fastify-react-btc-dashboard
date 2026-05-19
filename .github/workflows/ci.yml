@@ -30,12 +30,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Typecheck
-        run: |
-          pnpm --filter @btc-dashboard/server exec tsc --noEmit
-          pnpm --filter @btc-dashboard/client exec tsc --noEmit
+        run: pnpm typecheck
 
       - name: Lint
         run: pnpm lint
+
+      - name: Format check
+        run: pnpm format:check
 
       - name: Test
         run: pnpm test

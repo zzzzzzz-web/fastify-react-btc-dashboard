@@ -6,6 +6,8 @@
     "lint": "eslint packages/*/src",
     "lint:fix": "eslint packages/*/src --fix",
     "format": "prettier --write packages/*/src",
+    "format:check": "prettier --check packages/*/src",
+    "typecheck": "pnpm --filter @btc-dashboard/server exec tsc --noEmit && pnpm --filter @btc-dashboard/client exec tsc --noEmit",
     "test": "pnpm -r test"
   },
   "engines": {

@@ -49,7 +49,9 @@ describe('createCoinbaseFeed', () => {
     createCoinbaseFeed(mockLog)
     latestWs().emit('open')
 
-    const calls = latestWs().send.mock.calls.map((c: string[]) => JSON.parse(c[0]))
+    const calls = latestWs().send.mock.calls.map((c: string[]) =>
+      JSON.parse(c[0]),
+    )
     expect(calls).toContainEqual(
       expect.objectContaining({ type: 'subscribe', channel: 'market_trades' }),
     )
@@ -106,7 +108,14 @@ describe('createCoinbaseFeed', () => {
           {
             type: 'update',
             trades: [
-              { trade_id: '1', product_id: 'BTC-USD', price: '50000', size: '0.001', side: 'SELL', time: '2024-01-01T00:00:00Z' },
+              {
+                trade_id: '1',
+                product_id: 'BTC-USD',
+                price: '50000',
+                size: '0.001',
+                side: 'SELL',
+                time: '2024-01-01T00:00:00Z',
+              },
             ],
           },
         ],
@@ -128,7 +137,9 @@ describe('createCoinbaseFeed', () => {
         events: [
           {
             type: 'update',
-            tickers: [{ type: 'ticker', product_id: 'BTC-USD', price: '50000.50' }],
+            tickers: [
+              { type: 'ticker', product_id: 'BTC-USD', price: '50000.50' },
+            ],
           },
         ],
       }),
@@ -150,8 +161,22 @@ describe('createCoinbaseFeed', () => {
           {
             type: 'update',
             trades: [
-              { trade_id: '1', product_id: 'BTC-USD', price: '100', size: '1', side: 'BUY', time: '2024-01-01T00:00:00Z' },
-              { trade_id: '2', product_id: 'BTC-USD', price: '200', size: '2', side: 'SELL', time: '2024-01-01T00:00:01Z' },
+              {
+                trade_id: '1',
+                product_id: 'BTC-USD',
+                price: '100',
+                size: '1',
+                side: 'BUY',
+                time: '2024-01-01T00:00:00Z',
+              },
+              {
+                trade_id: '2',
+                product_id: 'BTC-USD',
+                price: '200',
+                size: '2',
+                side: 'SELL',
+                time: '2024-01-01T00:00:01Z',
+              },
             ],
           },
         ],

@@ -8,11 +8,7 @@ import {
   storePrice,
   getRecentPrices,
 } from './redis.js'
-import {
-  connectPostgres,
-  storeCandle,
-  getCandles,
-} from './postgres.js'
+import { connectPostgres, storeCandle, getCandles } from './postgres.js'
 import { createCandleAccumulator } from './candles.js'
 import { buildApp } from './app.js'
 import type { Trade, Candle } from './types.js'

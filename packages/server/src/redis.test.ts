@@ -26,7 +26,10 @@ describe('storeTrade', () => {
   it('pushes serialized trade to btc:trades', async () => {
     const client = mockClient()
     await storeTrade(client as never, trade)
-    expect(client.lPush).toHaveBeenCalledWith('btc:trades', JSON.stringify(trade))
+    expect(client.lPush).toHaveBeenCalledWith(
+      'btc:trades',
+      JSON.stringify(trade),
+    )
   })
 
   it('trims list to 500 entries', async () => {

@@ -58,11 +58,17 @@ export default function LiveChart({ data }: LiveChartProps) {
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Shift')
-        chart.applyOptions({ handleScroll: { mouseWheel: true }, handleScale: { mouseWheel: true } })
+        chart.applyOptions({
+          handleScroll: { mouseWheel: true },
+          handleScale: { mouseWheel: true },
+        })
     }
     const onKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'Shift')
-        chart.applyOptions({ handleScroll: { mouseWheel: false }, handleScale: { mouseWheel: false } })
+        chart.applyOptions({
+          handleScroll: { mouseWheel: false },
+          handleScale: { mouseWheel: false },
+        })
     }
     window.addEventListener('keydown', onKeyDown)
     window.addEventListener('keyup', onKeyUp)

@@ -26,7 +26,9 @@ describe('GET /health', () => {
 
 describe('GET /candles', () => {
   it('returns candle data for a valid range', async () => {
-    const candles = [{ time: 1000, open: 100, high: 110, low: 90, close: 105, volume: 1 }]
+    const candles = [
+      { time: 1000, open: 100, high: 110, low: 90, close: 105, volume: 1 },
+    ]
     mockDeps.getCandles.mockResolvedValueOnce(candles)
     app = await buildApp(mockDeps)
 
@@ -44,14 +46,23 @@ describe('GET /candles', () => {
 
   it('returns 400 for an invalid range', async () => {
     app = await buildApp(mockDeps)
-    const res = await app.inject({ method: 'GET', url: '/candles?range=invalid' })
+    const res = await app.inject({
+      method: 'GET',
+      url: '/candles?range=invalid',
+    })
     expect(res.statusCode).toBe(400)
     expect(res.json()).toEqual({ error: 'invalid range' })
   })
 
-  it.each(['day', 'week', 'month', 'year'])('accepts range=%s', async (range) => {
-    app = await buildApp(mockDeps)
-    const res = await app.inject({ method: 'GET', url: `/candles?range=${range}` })
-    expect(res.statusCode).toBe(200)
-  })
+  it.each(['day', 'week', 'month', 'year'])(
+    'accepts range=%s',
+    async (range) => {
+      app = await buildApp(mockDeps)
+      const res = await app.inject({
+        method: 'GET',
+        url: `/candles?range=${range}`,
+      })
+      expect(res.statusCode).toBe(200)
+    },
+  )
 })

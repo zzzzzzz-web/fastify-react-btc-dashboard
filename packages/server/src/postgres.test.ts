@@ -20,7 +20,9 @@ describe('rangeConfig', () => {
 
 describe('getCandles', () => {
   it('returns rows from sql result', async () => {
-    const rows = [{ time: 1000, open: 100, high: 110, low: 90, close: 105, volume: 1 }]
+    const rows = [
+      { time: 1000, open: 100, high: 110, low: 90, close: 105, volume: 1 },
+    ]
     const mockSql = vi.fn().mockImplementation((...args: unknown[]) => {
       if (Array.isArray(args[0])) return Promise.resolve(rows)
       return args[0]

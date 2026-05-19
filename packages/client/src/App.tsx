@@ -93,7 +93,11 @@ export default function App() {
           )
         }
 
-        if (msg.type === 'candle' && msg.candle && candleRangeRef.current === 'day') {
+        if (
+          msg.type === 'candle' &&
+          msg.candle &&
+          candleRangeRef.current === 'day'
+        ) {
           const c = msg.candle
           const newCandle: CandlePoint = {
             time: Math.floor(new Date(c.time).getTime() / 1000),
